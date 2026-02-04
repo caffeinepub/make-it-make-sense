@@ -1,0 +1,215 @@
+{
+  "kind": "build_request",
+  "title": "Build “Make It Make Sense” — a minimal Coherence Engine with run-once onboarding, mostly-silent daily surface, interruption rewrite, and weekly inconsistency reflection",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement Internet Identity sign-in and a per-user app state so each signed-in user has their own onboarding answers and display history.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a small, personal app called “Make It Make Sense.”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can sign in/out with Internet Identity.",
+        "Data shown in the app is scoped to the currently authenticated principal.",
+        "A new principal sees onboarding; a returning principal does not (unless explicitly reset via a non-question control—see other requirements)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create a run-once onboarding flow that asks exactly these four questions, one at a time, in this exact wording and order, and stores the user’s responses verbatim (no summarizing, no interpretation): 1) “What do you say matters most to you right now?” 2) “What keeps getting more of your time or energy instead?” 3) “How do you usually explain that difference to yourself?” 4) “What would be uncomfortable to admit if that explanation wasn’t true?”",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ONBOARDING (RUN ONCE)\n\nAsk the user exactly these four questions, one at a time:\n\nWhat do you say matters most to you right now?\n\nWhat keeps getting more of your time or energy instead?\n\nHow do you usually explain that difference to yourself?\n\nWhat would be uncomfortable to admit if that explanation wasn’t true?\n\nStore the user’s exact wording.\nDo not summarize.\nDo not interpret."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Questions are displayed one at a time (no multi-question form).",
+        "The question text matches exactly (including punctuation/case) as provided.",
+        "User responses are stored exactly as entered and can be retrieved losslessly (including capitalization and punctuation).",
+        "After the 4th answer is submitted, onboarding is marked complete and the app transitions to the normal (mostly-silent) experience.",
+        "After onboarding completes, the app does not ask any additional questions anywhere."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement the mostly-silent daily experience: on most days show nothing; on some days show exactly one sentence only (no extra text), where that sentence is a restated version of the user’s logic loop compressed into a single clear line using only the user’s stored wording (edited only for clarity and grammatical coherence).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "DAILY EXPERIENCE\n\nOn most days, show nothing.\n\nOn some days, show one sentence only.\n\nThat sentence must be a restated version of the user’s own logic, compressed into a single clear line.\n\n...content must come from user input...\n\nNo commentary.\nNo tone softening.\nNo follow-up."
+        ]
+      },
+      "acceptanceCriteria": [
+        "On days when the app is in “silent” mode, the main content area renders no sentence and no substitute motivational copy (silence is preserved).",
+        "On days when the app surfaces content, it renders exactly one sentence (single line/paragraph) and nothing else in the content area.",
+        "The surfaced sentence is constructed entirely from the user’s saved onboarding answers; any edits are limited to grammar/clarity (e.g., minor punctuation, removing duplicates, resolving pronouns where possible without adding new ideas).",
+        "The app never appends advice, encouragement, reassurance, diagnosis, or action suggestions to the daily sentence.",
+        "The app does not ask any questions in this daily experience mode."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add the signature feature view that, when content is shown, displays a centered block titled exactly “Your Current Explanation” with one sentence underneath built entirely from the user’s words, edited only for clarity and grammatical coherence, with no truth claims and no commentary.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "SIGNATURE FEATURE — THE EXPLANATION\n\nWhen shown, display a centered block titled:\n\n“Your Current Explanation”\n\nUnder it, show one sentence, built entirely from the user’s words, edited only for clarity and grammatical coherence.\n\nThe app does not say whether the explanation is true or false.\n\nIt only makes it explicit."
+        ]
+      },
+      "acceptanceCriteria": [
+        "When an explanation is available to show, the UI includes a centered block with the title text exactly “Your Current Explanation”.",
+        "Only one sentence is displayed under the title.",
+        "No additional labels, tooltips, disclaimers, encouragement, or interpretive commentary are shown alongside the explanation."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement the interruption button labeled exactly “State it without cushioning.” that, when pressed, rewrites the currently displayed explanation into a single plain, literal sentence that removes euphemisms and justifications, while still avoiding advice/comfort/validation and not introducing new concepts beyond the user’s stored wording.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "INTERRUPTION BUTTON\n\nInclude one button labeled:\n\n“State it without cushioning.”\n\nWhen pressed:\n\nRewrite the user’s explanation in plain, literal language\n\nRemove euphemisms and justifications\n\nKeep it to one sentence\n\nNo validation.\nNo comfort.\nNo advice."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A button with the exact label “State it without cushioning.” is present when an explanation is being shown.",
+        "Pressing the button replaces (or toggles) the displayed sentence with a single-sentence rewrite that is more literal and less euphemistic.",
+        "The rewrite does not add advice, encouragement, reassurance, diagnosis, or suggested actions.",
+        "The rewrite remains one sentence.",
+        "The rewrite does not introduce the prohibited words list into app-generated text (see hard constraints requirement)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement the weekly consistency check: once per week, show a short reflection titled exactly “Where your logic bent.” that describes inconsistencies in explanations (not behavior), never mentions progress/success/failure, and never suggests change.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "WEEKLY CONSISTENCY CHECK\n\nOnce per week, show a short reflection titled:\n\n“Where your logic bent.”\n\nRules:\n\nDescribe inconsistencies, not behavior\n\nNever mention progress, success, or failure\n\nNever suggest change\n\nExample structure:\n\n“This week, the explanation changed more often than the priority.”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "At most once in any rolling 7-day window per user, the app can surface the weekly reflection.",
+        "When shown, the UI title is exactly “Where your logic bent.”",
+        "The reflection text is short and focused on inconsistency in the user’s explanation framing (e.g., changes in explanation vs. stable priority) rather than describing the user’s actions or behavior.",
+        "The reflection does not mention progress, success, failure, or suggest any changes or next steps.",
+        "No questions are asked as part of the weekly reflection."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Enforce all hard constraints across all app-generated UI text and generated sentences: never give advice, suggest action, encourage effort, offer reassurance, diagnose, or ask questions after onboarding; never use the words “should”, “need to”, “try”, “improve”, “better”, “fix”, “heal”, “grow”, “productive” in any app-generated text; do not implement streaks, goals, scores, reminders, or dashboards; preserve “silence is a feature.”",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "HARD CONSTRAINTS (MANDATORY)\n\nYou must never:\n\nGive advice\n\nSuggest action\n\nEncourage effort\n\nOffer reassurance\n\nDiagnose\n\nAsk questions after onboarding\n\nYou must never use the words:\nshould, need to, try, improve, better, fix, heal, grow, productive\n\nNo streaks\nNo goals\nNo scores\nNo reminders\nNo dashboards\n\nSilence is a feature."
+        ]
+      },
+      "acceptanceCriteria": [
+        "After onboarding is complete, there are zero question marks or interrogative prompts presented by the app (excluding the onboarding questions themselves).",
+        "No app-generated copy contains any of the prohibited words (case-insensitive match) listed by the user.",
+        "The UI contains no streak counters, goals, scoring, reminders, notification prompts, or dashboard-style summaries.",
+        "On days with no surfaced content, the UI does not fill the empty state with motivational or supportive messaging."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Persist the minimal data needed to support the product behavior: store onboarding answers verbatim, onboarding completion flag, timestamps for last time daily content was surfaced and last time weekly reflection was surfaced, and a small history of surfaced sentences (and/or their source template choices) sufficient to generate the weekly inconsistency reflection.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Store the user’s exact wording.\nDo not summarize.\nDo not interpret.",
+          "Weekly consistency check ... Describe inconsistencies ..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes methods to save each onboarding answer step and to fetch the current user state.",
+        "Backend persists state across sessions/upgrades using stable storage patterns appropriate for a single Motoko actor.",
+        "Backend stores enough history to determine whether “the explanation changed” within the last 7 days (without introducing dashboards or scores)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Provide a minimal settings/control to reset the onboarding data (clear stored answers and history) without asking additional questions (i.e., no confirmation phrased as a question).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Ask questions after onboarding"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A reset control exists (e.g., a small ‘Reset’ action) that clears the user’s stored loop and history.",
+        "The reset interaction does not present any new questions (no confirmation dialogs phrased as questions).",
+        "After reset, the next app view is the first onboarding question again."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Apply a coherent visual theme consistent with: minimal, neutral, almost clinical; language as the interface; clarity over comfort. Use a restrained palette (avoid blue/purple), simple typography, ample whitespace, and a centered layout for the explanation block.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "DESIGN PRINCIPLES\n\nMinimal\n\nNeutral\n\nAlmost clinical\n\nLanguage as the interface\n\nClarity over comfort"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses a restrained neutral color palette (e.g., off-white/gray/black) and avoids decorative elements.",
+        "Typography and spacing emphasize readability and calm neutrality.",
+        "The explanation block is visually centered and prominent when shown.",
+        "No celebratory, motivational, or emotionally supportive visual patterns appear (e.g., confetti, trophies, progress bars)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo; only add migration.mo if an upgrade requires it.",
+    "Do not modify any files under frontend/src/components/ui or any paths listed as immutable in SYSTEM_CONTEXT.",
+    "Use English for all user-facing text.",
+    "App-generated text must not include the prohibited words list; user-entered text must be stored verbatim as specified.",
+    "After onboarding, the app must not ask any questions (no question-mark prompts)."
+  ],
+  "nonGoals": [
+    "Third-party authentication beyond Internet Identity.",
+    "Push notifications, reminders, emails, or any scheduled background jobs outside normal user app usage.",
+    "Dashboards, analytics, streaks, goals, scores, progress tracking, or motivational content.",
+    "Advice, coaching, therapy-style features, diagnoses, or corrective feedback about truthfulness of the user’s explanation."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

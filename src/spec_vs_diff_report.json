@@ -1,0 +1,120 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-04T00:02:48.761Z",
+  "summary": "Diff adds a new Motoko backend actor with per-principal maps plus a React frontend implementing Internet Identity auth gating, onboarding flow, daily explanation surface with an “uncushioned” toggle, weekly reflection view, reset control, and a neutral Tailwind theme. Several requirements are partially met but key constraints (verbatim storage, exact onboarding wording/punctuation, per-step persistence methods, strict “one sentence only” daily surface, and stable persistence/upgrade safety) are not evidenced or are contradicted by the implementation.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Store onboarding responses verbatim (lossless) and use the exact provided onboarding question wording/punctuation.",
+      "reason": "OnboardingFlow trims user input before saving (not verbatim), and the 4th question uses a straight apostrophe (\"wasn't\") instead of the provided curly apostrophe (\"wasn’t\"), so the displayed question text does not match exactly.",
+      "evidence": [
+        "frontend/src/features/onboarding/OnboardingFlow.tsx",
+        "frontend/src/features/onboarding/onboardingQuestions.ts"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Backend exposes methods to save each onboarding answer step and persists state across sessions/upgrades using stable storage patterns.",
+      "reason": "Backend shows a single `initializeOnboarding(answers)` call (not per-step save methods). Also, no `stable var`/stable storage or migration mechanism is visible in the provided backend snippet; persistence across upgrades is not evidenced.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/features/onboarding/OnboardingFlow.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Mostly-silent daily experience: on surfaced days render exactly one sentence only in the content area; on silent days show nothing (no substitute copy).",
+      "reason": "When due, the daily surface renders a title and a button in addition to the sentence, so the surfaced state is not “exactly one sentence only … and nothing else in the content area.”",
+      "evidence": [
+        "frontend/src/features/daily/ExplanationBlock.tsx",
+        "frontend/src/features/daily/DailySurface.tsx"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Uncushioned rewrite must be a single plain literal sentence that removes euphemisms/justifications while not introducing new concepts beyond the user’s stored wording.",
+      "reason": "Both synthesis functions introduce substantial new phrasing not derived from the user’s stored wording (e.g., “You say … matters most, but you explain choosing … by telling yourself …”, “is stated as the priority…which works only if …”). They also force `.toLowerCase()` on user content, altering the user’s original capitalization rather than limiting edits to clarity/grammar.",
+      "evidence": [
+        "frontend/src/lib/textSynthesis.ts"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Enforce hard constraints across all app-generated UI text and generated sentences (including prohibited words list).",
+      "reason": "`validateText` only logs a warning and returns the original text unchanged, so prohibited-word usage is not actually prevented/removed. Enforcement is therefore not evidenced.",
+      "evidence": [
+        "frontend/src/lib/textConstraints.ts",
+        "frontend/src/lib/textSynthesis.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Weekly consistency check must describe inconsistencies in explanations (not behavior) and be shown at most once per rolling 7-day window per user.",
+      "reason": "The weekly reflection generator outputs generic statements (e.g., “No pattern yet established.”, “The explanation remained consistent.”) without clear linkage to inconsistency in explanation framing. Also, the diff does not provide sufficient evidence of a per-user rolling 7-day enforcement mechanism (backend implementation is truncated/not shown for `getReflectionState` / weekly gating logic).",
+      "evidence": [
+        "frontend/src/lib/textSynthesis.ts",
+        "frontend/src/features/weekly/WeeklyReflection.tsx",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile setup (name collection) and profile storage/query endpoints.",
+      "reason": "BuildRequest does not request a user profile concept or collecting/storing a name; it only requires per-user onboarding state scoped to Internet Identity principals.",
+      "evidence": [
+        "frontend/src/components/ProfileSetup.tsx",
+        "frontend/src/App.tsx",
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "description": "Authorization/access-control system with admin token initialization via URL parameter (`caffeineAdminToken`).",
+      "reason": "BuildRequest does not request admin roles, access control permissions, or secret URL token handling.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/utils/urlParams.ts"
+      ]
+    },
+    {
+      "description": "Toast/notification system inclusion (`Toaster` from sonner).",
+      "reason": "BuildRequest explicitly lists no notifications/reminders; while a toaster is not necessarily a reminder, it is an unrequested UI subsystem and its use is not justified by requirements.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AuthGate.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/ProfileSetup.tsx",
+    "frontend/src/features/MainExperience.tsx",
+    "frontend/src/features/daily/DailySurface.tsx",
+    "frontend/src/features/daily/ExplanationBlock.tsx",
+    "frontend/src/features/onboarding/OnboardingFlow.tsx",
+    "frontend/src/features/onboarding/onboardingQuestions.ts",
+    "frontend/src/features/settings/ResetControl.tsx",
+    "frontend/src/features/weekly/WeeklyReflection.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/textConstraints.ts",
+    "frontend/src/lib/textSynthesis.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

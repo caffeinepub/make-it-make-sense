@@ -1,0 +1,273 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-04T00:02:48.801Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 10,
+    "implemented": 9,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Implement Internet Identity sign-in and a per-user app state so each signed-in user has their own onboarding answers and display history.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/AuthGate.tsx",
+          "frontend/src/hooks/useUserProfile.ts",
+          "frontend/src/components/ProfileSetup.tsx",
+          "frontend/src/main.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/AuthGate.tsx",
+          "frontend/src/components/ProfileSetup.tsx",
+          "frontend/src/main.tsx"
+        ]
+      },
+      {
+        "id": "REQ-10",
+        "summary": "Apply a coherent visual theme consistent with: minimal, neutral, almost clinical; language as the interface; clarity over comfort. Use a restrained palette (avoid blue/purple), simple typography, ample whitespace, and a centered layout for the explanation block.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/index.css",
+          "frontend/src/features/daily/ExplanationBlock.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/index.css",
+          "frontend/src/features/daily/ExplanationBlock.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Create a run-once onboarding flow that asks exactly these four questions, one at a time, in this exact wording and order, and stores the user’s responses verbatim (no summarizing, no interpretation): 1) “What do you say matters most to you right now?” 2) “What keeps getting more of your time or energy instead?” 3) “How do you usually explain that difference to yourself?” 4) “What would be uncomfortable to admit if that explanation wasn’t true?”",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/onboarding/onboardingQuestions.ts",
+          "frontend/src/hooks/useOnboarding.ts",
+          "frontend/src/features/onboarding/OnboardingFlow.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/onboarding/onboardingQuestions.ts",
+          "frontend/src/features/onboarding/OnboardingFlow.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Implement the mostly-silent daily experience: on most days show nothing; on some days show exactly one sentence only (no extra text), where that sentence is a restated version of the user’s logic loop compressed into a single clear line using only the user’s stored wording (edited only for clarity and grammatical coherence).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useReflectionState.ts",
+          "frontend/src/lib/textSynthesis.ts",
+          "frontend/src/features/daily/DailySurface.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/textSynthesis.ts",
+          "frontend/src/features/daily/DailySurface.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Add the signature feature view that, when content is shown, displays a centered block titled exactly “Your Current Explanation” with one sentence underneath built entirely from the user’s words, edited only for clarity and grammatical coherence, with no truth claims and no commentary.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/daily/ExplanationBlock.tsx",
+          "frontend/src/features/daily/DailySurface.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/daily/ExplanationBlock.tsx",
+          "frontend/src/features/daily/DailySurface.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Implement the interruption button labeled exactly “State it without cushioning.” that, when pressed, rewrites the currently displayed explanation into a single plain, literal sentence that removes euphemisms and justifications, while still avoiding advice/comfort/validation and not introducing new concepts beyond the user’s stored wording.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/textConstraints.ts",
+          "frontend/src/lib/textSynthesis.ts",
+          "frontend/src/features/daily/ExplanationBlock.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/textConstraints.ts",
+          "frontend/src/lib/textSynthesis.ts",
+          "frontend/src/features/daily/ExplanationBlock.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Implement the weekly consistency check: once per week, show a short reflection titled exactly “Where your logic bent.” that describes inconsistencies in explanations (not behavior), never mentions progress/success/failure, and never suggests change.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useSentenceHistory.ts",
+          "frontend/src/features/weekly/WeeklyReflection.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/weekly/WeeklyReflection.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Enforce all hard constraints across all app-generated UI text and generated sentences: never give advice, suggest action, encourage effort, offer reassurance, diagnose, or ask questions after onboarding; never use the words “should”, “need to”, “try”, “improve”, “better”, “fix”, “heal”, “grow”, “productive” in any app-generated text; do not implement streaks, goals, scores, reminders, or dashboards; preserve “silence is a feature.”",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/textConstraints.ts",
+          "frontend/src/features/daily/DailySurface.tsx",
+          "frontend/src/features/weekly/WeeklyReflection.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/textConstraints.ts",
+          "frontend/src/features/daily/DailySurface.tsx",
+          "frontend/src/features/weekly/WeeklyReflection.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Persist the minimal data needed to support the product behavior: store onboarding answers verbatim, onboarding completion flag, timestamps for last time daily content was surfaced and last time weekly reflection was surfaced, and a small history of surfaced sentences (and/or their source template choices) sufficient to generate the weekly inconsistency reflection.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Provide a minimal settings/control to reset the onboarding data (clear stored answers and history) without asking additional questions (i.e., no confirmation phrased as a question).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/settings/ResetControl.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/settings/ResetControl.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/AuthGate.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/ProfileSetup.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/features/MainExperience.tsx",
+    "frontend/src/features/daily/DailySurface.tsx",
+    "frontend/src/features/daily/ExplanationBlock.tsx",
+    "frontend/src/features/onboarding/OnboardingFlow.tsx",
+    "frontend/src/features/onboarding/onboardingQuestions.ts",
+    "frontend/src/features/settings/ResetControl.tsx",
+    "frontend/src/features/weekly/WeeklyReflection.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/textConstraints.ts",
+    "frontend/src/lib/textSynthesis.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

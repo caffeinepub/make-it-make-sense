@@ -1,2 +1,3 @@
-# make-it-make-sense
-Exported from Caffeine project: Make It Make Sense
+## Make It Make Sense
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

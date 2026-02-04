@@ -1,0 +1,193 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-a-per-user-app-state-so-each-signed-in-user-has-their-own-onboarding-answers-and-display-history",
+      "featureTitle": "Implement Internet Identity sign-in and a per-user app state so each signed-in user has their own onboarding answers and display history.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AuthGate.tsx",
+        "frontend/src/components/ProfileSetup.tsx",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-run-once-onboarding-flow-that-asks-exactly-these-four-questions-one-at-a-time-in-this-exact-wording-and-order-and-stores-the-user-s-responses-verbatim-no-summarizing-no-interpretation-1-what-do-you-say-matters-most-to-you-right-now-2-what-keeps-getting-more-of-your-time-or-energy-instead-3-how-do-you-usually-explain-that-difference-to-yourself-4-what-would-be-uncomfortable-to-admit-if-that-explanation-wasn-t-true",
+      "featureTitle": "Create a run-once onboarding flow that asks exactly these four questions, one at a time, in this exact wording and order, and stores the user’s responses verbatim (no summarizing, no interpretation): 1) “What do you say matters most to you right now?” 2) “What keeps getting more of your time or energy instead?” 3) “How do you usually explain that difference to yourself?” 4) “What would be uncomfortable to admit if that explanation wasn’t true?”",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/onboarding/OnboardingFlow.tsx",
+        "frontend/src/features/onboarding/onboardingQuestions.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-mostly-silent-daily-experience-on-most-days-show-nothing-on-some-days-show-exactly-one-sentence-only-no-extra-text-where-that-sentence-is-a-restated-version-of-the-user-s-logic-loop-compressed-into-a-single-clear-line-using-only-the-user-s-stored-wording-edited-only-for-clarity-and-grammatical-coherence",
+      "featureTitle": "Implement the mostly-silent daily experience: on most days show nothing; on some days show exactly one sentence only (no extra text), where that sentence is a restated version of the user’s logic loop compressed into a single clear line using only the user’s stored wording (edited only for clarity and grammatical coherence).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/daily/DailySurface.tsx",
+        "frontend/src/lib/textSynthesis.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-the-signature-feature-view-that-when-content-is-shown-displays-a-centered-block-titled-exactly-your-current-explanation-with-one-sentence-underneath-built-entirely-from-the-user-s-words-edited-only-for-clarity-and-grammatical-coherence-with-no-truth-claims-and-no-commentary",
+      "featureTitle": "Add the signature feature view that, when content is shown, displays a centered block titled exactly “Your Current Explanation” with one sentence underneath built entirely from the user’s words, edited only for clarity and grammatical coherence, with no truth claims and no commentary.",
+      "files": [
+        "frontend/src/features/daily/DailySurface.tsx",
+        "frontend/src/features/daily/ExplanationBlock.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-interruption-button-labeled-exactly-state-it-without-cushioning-that-when-pressed-rewrites-the-currently-displayed-explanation-into-a-single-plain-literal-sentence-that-removes-euphemisms-and-justifications-while-still-avoiding-advice-comfort-validation-and-not-introducing-new-concepts-beyond-the-user-s-stored-wording",
+      "featureTitle": "Implement the interruption button labeled exactly “State it without cushioning.” that, when pressed, rewrites the currently displayed explanation into a single plain, literal sentence that removes euphemisms and justifications, while still avoiding advice/comfort/validation and not introducing new concepts beyond the user’s stored wording.",
+      "files": [
+        "frontend/src/features/daily/ExplanationBlock.tsx",
+        "frontend/src/lib/textConstraints.ts",
+        "frontend/src/lib/textSynthesis.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-weekly-consistency-check-once-per-week-show-a-short-reflection-titled-exactly-where-your-logic-bent-that-describes-inconsistencies-in-explanations-not-behavior-never-mentions-progress-success-failure-and-never-suggests-change",
+      "featureTitle": "Implement the weekly consistency check: once per week, show a short reflection titled exactly “Where your logic bent.” that describes inconsistencies in explanations (not behavior), never mentions progress/success/failure, and never suggests change.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/weekly/WeeklyReflection.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-enforce-all-hard-constraints-across-all-app-generated-ui-text-and-generated-sentences-never-give-advice-suggest-action-encourage-effort-offer-reassurance-diagnose-or-ask-questions-after-onboarding-never-use-the-words-should-need-to-try-improve-better-fix-heal-grow-productive-in-any-app-generated-text-do-not-implement-streaks-goals-scores-reminders-or-dashboards-preserve-silence-is-a-feature",
+      "featureTitle": "Enforce all hard constraints across all app-generated UI text and generated sentences: never give advice, suggest action, encourage effort, offer reassurance, diagnose, or ask questions after onboarding; never use the words “should”, “need to”, “try”, “improve”, “better”, “fix”, “heal”, “grow”, “productive” in any app-generated text; do not implement streaks, goals, scores, reminders, or dashboards; preserve “silence is a feature.”",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/daily/DailySurface.tsx",
+        "frontend/src/features/weekly/WeeklyReflection.tsx",
+        "frontend/src/lib/textConstraints.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-a-minimal-settings-control-to-reset-the-onboarding-data-clear-stored-answers-and-history-without-asking-additional-questions-i-e-no-confirmation-phrased-as-a-question",
+      "featureTitle": "Provide a minimal settings/control to reset the onboarding data (clear stored answers and history) without asking additional questions (i.e., no confirmation phrased as a question).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/settings/ResetControl.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-visual-theme-consistent-with-minimal-neutral-almost-clinical-language-as-the-interface-clarity-over-comfort-use-a-restrained-palette-avoid-blue-purple-simple-typography-ample-whitespace-and-a-centered-layout-for-the-explanation-block",
+      "featureTitle": "Apply a coherent visual theme consistent with: minimal, neutral, almost clinical; language as the interface; clarity over comfort. Use a restrained palette (avoid blue/purple), simple typography, ample whitespace, and a centered layout for the explanation block.",
+      "files": [
+        "frontend/index.css",
+        "frontend/src/features/daily/ExplanationBlock.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
