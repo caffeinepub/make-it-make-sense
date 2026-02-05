@@ -1,136 +1,241 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 4,
-  "summary": "Personal minimal self-clarity app “Make It Make Sense” (The Coherence Engine) that captures a user’s exact onboarding answers, then mostly stays silent while occasionally surfacing single-sentence restatements of the user’s own logic; includes an explicit “Your Current Explanation” view, a one-sentence “State it without cushioning” rewrite, and a weekly inconsistency reflection—strictly no advice, encouragement, or follow-up questions after onboarding.",
+  "projectStateVersion": 3,
+  "summary": "“Make It Make Sense” (The Coherence Engine) is a minimal, language-first self-clarity web app built on the Internet Computer. Users authenticate with Internet Identity, set a simple name profile, complete a one-time 4-question onboarding (answers stored verbatim), and then the app is mostly silent—only surfacing a daily single-sentence restatement of the user’s own reasoning when due, plus a weekly consistency reflection (“Where the reasoning bent.”). Generated copy is built from fixed templates using the user’s onboarding wording and is checked against hard constraints (no advice/encouragement/diagnosis/reassurance, no post-onboarding questions, and a prohibited-words list). The Design Principles section is now a single line: “You restate what you’re already telling yourself.”",
   "existing_features": [
     {
-      "id": "feature-implement-internet-identity-sign-in-and-a-per-user-app-state-so-each-signed-in-user-has-their-own-onboarding-answers-and-display-history",
-      "title": "Implement Internet Identity sign-in and a per-user app state so each signed-in user has their own onboarding answers and display history.",
+      "id": "IF-1",
+      "title": "Internet Identity authentication (login/logout/persistence)",
+      "synonyms": [
+        "InternetIdentityProvider",
+        "AuthClient login"
+      ],
+      "description": "Provides a React context for Internet Identity authentication, including login/logout, identity persistence across reloads, and status flags for initializing/logging-in/error states.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-2",
+      "title": "Backend actor creation with identity + query invalidation",
+      "synonyms": [
+        "useActor",
+        "Actor factory"
+      ],
+      "description": "Creates an authenticated or anonymous ICP canister actor based on the current identity, initializes access control, and invalidates/refetches non-actor React Query caches when the actor changes.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-3",
+      "title": "Secret admin token ingestion via URL hash (with session persistence)",
+      "synonyms": [
+        "caffeineAdminToken",
+        "getSecretParameter"
+      ],
+      "description": "Reads a secret token from the URL hash fragment, persists it in sessionStorage, and clears it from the URL to reduce history/referrer leakage; used to bootstrap admin assignment on first initialization.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-4",
+      "title": "Role-based access control in backend (admin/user/guest)",
+      "synonyms": [
+        "AccessControl",
+        "MixinAuthorization"
+      ],
+      "description": "Implements user roles and permission checks in Motoko; supports initialization (first matching-secret caller becomes admin), querying caller role/admin status, and admin-only role assignment.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-5",
+      "title": "User profile (name) storage and first-login profile setup UI",
+      "synonyms": [
+        "ProfileSetup",
+        "saveCallerUserProfile"
+      ],
+      "description": "Prompts first-time authenticated users to enter a name and saves it to the backend; supports fetching the caller’s profile to determine whether setup is required.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-6",
+      "title": "Onboarding questions (4 prompts, exact wording)",
+      "synonyms": [
+        "ONBOARDING_QUESTIONS",
+        "OnboardingStep"
+      ],
+      "description": "Defines four onboarding prompts, including question #2 exactly as “What is getting most of your time or energy instead?”, and a step type restricting valid step indices.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-create-a-run-once-onboarding-flow-that-asks-exactly-these-four-questions-one-at-a-time-in-this-exact-wording-and-order-and-stores-the-user-s-responses-verbatim-no-summarizing-no-interpretation-1-what-do-you-say-matters-most-to-you-right-now-2-what-keeps-getting-more-of-your-time-or-energy-instead-3-how-do-you-usually-explain-that-difference-to-yourself-4-what-would-be-uncomfortable-to-admit-if-that-explanation-wasn-t-true",
-      "title": "Create a run-once onboarding flow that asks exactly these four questions, one at a time, in this exact wording and order, and stores the user’s responses verbatim (no summarizing, no interpretation): 1) “What do you say matters most to you right now?” 2) “What keeps getting more of your time or energy instead?” 3) “How do you usually explain that difference to yourself?” 4) “What would be uncomfortable to admit if that explanation wasn’t true?”",
+      "id": "IF-7",
+      "title": "Step-by-step onboarding flow with verbatim answer capture",
+      "synonyms": [
+        "OnboardingFlow",
+        "initializeOnboarding"
+      ],
+      "description": "Renders one onboarding question at a time, collects free-text answers, trims only leading/trailing whitespace, and submits the final 4-field OnboardingAnswers payload to the backend for one-time initialization.",
       "reqIds": [
-        "REQ-2"
+        "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-the-mostly-silent-daily-experience-on-most-days-show-nothing-on-some-days-show-exactly-one-sentence-only-no-extra-text-where-that-sentence-is-a-restated-version-of-the-user-s-logic-loop-compressed-into-a-single-clear-line-using-only-the-user-s-stored-wording-edited-only-for-clarity-and-grammatical-coherence",
-      "title": "Implement the mostly-silent daily experience: on most days show nothing; on some days show exactly one sentence only (no extra text), where that sentence is a restated version of the user’s logic loop compressed into a single clear line using only the user’s stored wording (edited only for clarity and grammatical coherence).",
+      "id": "IF-8",
+      "title": "Reflection scheduling (daily/weekly due state)",
+      "synonyms": [
+        "getReflectionState",
+        "ReflectionState"
+      ],
+      "description": "Backend computes whether daily and weekly reflections are due based on last reflection timestamps; frontend queries this state and routes accordingly.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-9",
+      "title": "Main experience router (onboarding vs weekly vs daily)",
+      "synonyms": [
+        "MainExperience"
+      ],
+      "description": "Determines the active experience: onboarding if incomplete; weekly reflection if due; otherwise the daily surface. Weekly reflection takes precedence over daily when both are due.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-10",
+      "title": "Daily surface with “silence unless due” behavior",
+      "synonyms": [
+        "DailySurface"
+      ],
+      "description": "Shows an intentionally empty view when no daily reflection is due; when due and onboarding answers exist, it displays the explanation block.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-11",
+      "title": "Daily explanation + uncushioned toggle with logging",
+      "synonyms": [
+        "ExplanationBlock",
+        "State it without cushioning"
+      ],
+      "description": "Generates a “Your Current Explanation” sentence and an uncushioned variant; toggling to uncushioned triggers a backend log of the daily reflection sentence and updates reflection state/history caches.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-12",
+      "title": "Deterministic text synthesis using fixed templates",
+      "synonyms": [
+        "textSynthesis",
+        "generateExplanationSentence"
+      ],
+      "description": "Builds daily explanation sentences from onboarding answers using one of three allowed structures (including “This choice makes sense only if ___ doesn’t count.” and “Your explanation works as long as ___ is ignored.”), and generates a weekly reflection sentence from sentence history.",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-the-signature-feature-view-that-when-content-is-shown-displays-a-centered-block-titled-exactly-your-current-explanation-with-one-sentence-underneath-built-entirely-from-the-user-s-words-edited-only-for-clarity-and-grammatical-coherence-with-no-truth-claims-and-no-commentary",
-      "title": "Add the signature feature view that, when content is shown, displays a centered block titled exactly “Your Current Explanation” with one sentence underneath built entirely from the user’s words, edited only for clarity and grammatical coherence, with no truth claims and no commentary.",
+      "id": "IF-13",
+      "title": "Hard-constraint detection for generated text",
+      "synonyms": [
+        "textConstraints",
+        "validateText"
+      ],
+      "description": "Provides utilities to detect prohibited words, reassurance-like phrasing, and question marks in generated text; used to validate synthesized daily/weekly copy.",
       "reqIds": [
         "REQ-4"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-the-interruption-button-labeled-exactly-state-it-without-cushioning-that-when-pressed-rewrites-the-currently-displayed-explanation-into-a-single-plain-literal-sentence-that-removes-euphemisms-and-justifications-while-still-avoiding-advice-comfort-validation-and-not-introducing-new-concepts-beyond-the-user-s-stored-wording",
-      "title": "Implement the interruption button labeled exactly “State it without cushioning.” that, when pressed, rewrites the currently displayed explanation into a single plain, literal sentence that removes euphemisms and justifications, while still avoiding advice/comfort/validation and not introducing new concepts beyond the user’s stored wording.",
+      "id": "IF-14",
+      "title": "Weekly reflection view + auto-log with updated title text",
+      "synonyms": [
+        "WeeklyReflection",
+        "weeklyConsistencyCheck"
+      ],
+      "description": "Displays a weekly consistency reflection with the user-visible title “Where the reasoning bent.”, generates the reflection based on sentence history, and logs completion to the backend on mount.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "IF-15",
+      "title": "Sentence history storage and retrieval with retention limit",
+      "synonyms": [
+        "getSentenceHistory",
+        "sentenceRetentionLimit"
+      ],
+      "description": "Backend stores timestamped daily reflection sentences per user, trims history to a configured retention limit (default 20), and returns history sorted by timestamp for weekly reflection generation.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-16",
+      "title": "Settings reset control (client-side cache reset + backend onboarding update)",
+      "synonyms": [
+        "ResetControl",
+        "useResetOnboarding"
+      ],
+      "description": "Provides a minimal reset UI with a confirmation step; calls a backend mutation intended to clear onboarding answers, clears React Query cache, and reloads the page.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-17",
+      "title": "Minimal design principles and restrained UI shell",
+      "synonyms": [
+        "AuthGate copy",
+        "Minimal/Neutral/Language-first"
+      ],
+      "description": "Implements a minimal, neutral UI with a sign-in gate that states the app’s design principles (Minimal, Neutral, Language-first, Slightly uncomfortable, Clarity over comfort, and “Silence is intentional.”) and a simple header with reset and sign-out.",
       "reqIds": [
         "REQ-5"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-the-weekly-consistency-check-once-per-week-show-a-short-reflection-titled-exactly-where-your-logic-bent-that-describes-inconsistencies-in-explanations-not-behavior-never-mentions-progress-success-failure-and-never-suggests-change",
-      "title": "Implement the weekly consistency check: once per week, show a short reflection titled exactly “Where your logic bent.” that describes inconsistencies in explanations (not behavior), never mentions progress/success/failure, and never suggests change.",
+      "id": "feature-update-the-authentication-screen-authgate-to-replace-the-current-multi-line-design-principles-list-minimal-neutral-language-first-slightly-uncomfortable-clarity-over-comfort-silence-is-intentional-with-exactly-one-user-facing-line-you-restate-what-you-re-already-telling-yourself",
+      "title": "Update the authentication screen (AuthGate) to replace the current multi-line Design Principles list (Minimal / Neutral / Language-first / Slightly uncomfortable / Clarity over comfort / Silence is intentional.) with exactly one user-facing line: “You restate what you’re already telling yourself.”",
       "reqIds": [
         "REQ-6"
       ],
       "version": 1
-    },
-    {
-      "id": "feature-enforce-all-hard-constraints-across-all-app-generated-ui-text-and-generated-sentences-never-give-advice-suggest-action-encourage-effort-offer-reassurance-diagnose-or-ask-questions-after-onboarding-never-use-the-words-should-need-to-try-improve-better-fix-heal-grow-productive-in-any-app-generated-text-do-not-implement-streaks-goals-scores-reminders-or-dashboards-preserve-silence-is-a-feature",
-      "title": "Enforce all hard constraints across all app-generated UI text and generated sentences: never give advice, suggest action, encourage effort, offer reassurance, diagnose, or ask questions after onboarding; never use the words “should”, “need to”, “try”, “improve”, “better”, “fix”, “heal”, “grow”, “productive” in any app-generated text; do not implement streaks, goals, scores, reminders, or dashboards; preserve “silence is a feature.”",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-provide-a-minimal-settings-control-to-reset-the-onboarding-data-clear-stored-answers-and-history-without-asking-additional-questions-i-e-no-confirmation-phrased-as-a-question",
-      "title": "Provide a minimal settings/control to reset the onboarding data (clear stored answers and history) without asking additional questions (i.e., no confirmation phrased as a question).",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-apply-a-coherent-visual-theme-consistent-with-minimal-neutral-almost-clinical-language-as-the-interface-clarity-over-comfort-use-a-restrained-palette-avoid-blue-purple-simple-typography-ample-whitespace-and-a-centered-layout-for-the-explanation-block",
-      "title": "Apply a coherent visual theme consistent with: minimal, neutral, almost clinical; language as the interface; clarity over comfort. Use a restrained palette (avoid blue/purple), simple typography, ample whitespace, and a centered layout for the explanation block.",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
     }
   ],
-  "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "Onboarding flow (run once) asking exactly 4 specified questions one at a time; store user responses verbatim with no summarizing or interpretation",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Daily experience: usually show nothing; on some days show exactly one sentence restating the user’s own logic in a single clear line using only user-provided wording (edited only for clarity/grammar)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Signature feature screen: centered block titled “Your Current Explanation” displaying a single sentence built entirely from the user’s words (clarity/grammar edits only), with no truth claims or commentary",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Interruption button “State it without cushioning.” that rewrites the user’s explanation into one plain, literal sentence removing euphemisms/justifications, with no validation/comfort/advice",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Weekly consistency check: reflection titled “Where your logic bent.” describing inconsistencies in explanations (not behavior), with no mention of progress/success/failure and no suggestions to change",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Hard-constraints enforcement: never give advice/encouragement/diagnosis; never ask questions after onboarding; prohibit specific words (should, need to, try, improve, better, fix, heal, grow, productive); no streaks/goals/scores/reminders/dashboards; maintain minimal neutral clinical tone",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-14",
-      "summary": "Persist the minimal data needed to support the product behavior: store onboarding answers verbatim, onboarding completion flag, timestamps for last time daily content was surfaced and last time weekly reflection was surfaced, and a small history of surfaced sentences (and/or their source template choices) sufficient to generate the weekly inconsistency reflection.",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "status": "pending"
-    }
-  ],
+  "new_feature_requests": [],
   "architectural_notes": [
-    "Store onboarding answers exactly as entered (verbatim) and only reuse/reshape user-provided wording for generated sentences; edits limited to clarity and grammatical coherence.",
-    "Post-onboarding interaction model is non-interrogative: no questions are asked after onboarding; primary UI is silence with occasional single-sentence output.",
-    "Enforce content/tone constraints globally, including banned words list and prohibition on advice/encouragement/diagnosis/suggestions."
+    "Frontend is React + TypeScript with TanStack React Query; backend interactions are centralized in typed query/mutation hooks (useQueries) and an actor factory hook (useActor).",
+    "Authentication uses Internet Identity (@dfinity/auth-client) via a React context provider; identity is persisted and exposed with detailed login status flags.",
+    "Backend is a Motoko canister that stores per-user state keyed by Principal (profile, onboarding answers, reflection timestamps, sentence history).",
+    "Role-based access control is implemented in Motoko (admin/user/guest). First registered caller with a matching secret token becomes admin; others become users; anonymous callers are guests.",
+    "Admin token/secret is supplied client-side via a URL hash parameter and persisted in sessionStorage; the secret is cleared from the URL after extraction to reduce leakage.",
+    "Main experience routing is state-driven: if onboarding incomplete show onboarding; else if weekly due show weekly reflection; else show daily surface (silence unless daily due).",
+    "Text output is synthesized client-side using fixed sentence templates and then passed through shared constraint checks (prohibited words, reassurance patterns, and question marks).",
+    "Daily reflection logging is tied to the “State it without cushioning.” toggle; weekly reflection logging occurs automatically when the weekly view mounts.",
+    "React Query cache is cleared on logout and on reset; reset additionally forces a full page reload.",
+    "Design Principles copy was changed from a multi-line list to a single-line statement: “You restate what you’re already telling yourself.”"
   ],
-  "known_issues": [],
+  "known_issues": [
+    "Reset flow does not truly reset onboarding: backend considers onboarding complete when answers are non-null, but reset sets empty strings (still non-null), so onboarding will not restart after reload.",
+    "Constraint enforcement is not strict: validateText only logs warnings and returns the original text unchanged, so prohibited/reassuring/question text is not actually blocked or corrected.",
+    "Daily explanation synthesis lowercases user-provided onboarding text, which can violate the “verbatim” expectation and alter proper nouns/emphasis.",
+    "Daily explanation sentence selection uses Math.random, making output nondeterministic across renders/sessions and harder to test/reason about.",
+    "App creates an anonymous actor when not authenticated, but App.tsx still runs getCallerUserProfile via React Query; the backend traps for guests, producing avoidable query errors/noise.",
+    "Backend storage uses in-memory Maps without stable vars or upgrade hooks; user data is likely lost on canister upgrade.",
+    "WeeklyReflection triggers a mutation on mount; in React StrictMode, effects can run twice in development, potentially causing duplicate log calls.",
+    "Access control initialization traps if CAFFEINE_ADMIN_TOKEN is not set in the canister environment, which can prevent the app from functioning.",
+    "No dedicated UI for backend/query errors (mostly “Loading…” states), so failures are not surfaced clearly to users."
+  ],
   "isFixRequest": false,
   "gameProjectType": "none",
   "projectName": "Make It Make Sense",
-  "clarification_mode": "pro",
+  "clarification_mode": "instant",
   "clarification_rounds": 0
 }

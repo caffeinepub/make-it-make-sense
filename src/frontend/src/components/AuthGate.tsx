@@ -8,13 +8,16 @@ export default function AuthGate() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
       <div className="max-w-md w-full text-center space-y-8">
-        <div className="space-y-2">
+        <div className="space-y-4">
           <h1 className="text-2xl font-light tracking-tight text-foreground">
             Make It Make Sense
           </h1>
           <p className="text-sm text-muted-foreground font-light">
             The Coherence Engine
           </p>
+          <div className="pt-2 text-xs text-muted-foreground font-light">
+            <p>You restate what you're already telling yourself.</p>
+          </div>
         </div>
 
         <button

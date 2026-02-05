@@ -18,7 +18,7 @@ export default function WeeklyReflection() {
     <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-12">
       <div className="max-w-2xl w-full text-center space-y-6">
         <h2 className="text-sm font-light tracking-widest uppercase text-muted-foreground">
-          Where your logic bent.
+          Where the reasoning bent.
         </h2>
         
         <p className="text-xl font-light leading-relaxed text-foreground">

@@ -2,9 +2,17 @@ import type { OnboardingAnswers, Data } from '../backend';
 import { validateText } from './textConstraints';
 
 export function generateExplanationSentence(answers: OnboardingAnswers): string {
-  const { whatMattersMost, timeSpentInstead, explanation } = answers;
+  const { whatMattersMost, timeSpentInstead, explanation, uncomfortableTruth } = answers;
   
-  const sentence = `You say ${whatMattersMost.toLowerCase()} matters most, but you explain choosing ${timeSpentInstead.toLowerCase()} by telling yourself ${explanation.toLowerCase()}.`;
+  // Randomly select one of the three allowed structures
+  const structures = [
+    () => `You say ${whatMattersMost.toLowerCase()} matters most, but you explain choosing ${timeSpentInstead.toLowerCase()} by telling yourself ${explanation.toLowerCase()}.`,
+    () => `This choice makes sense only if ${uncomfortableTruth.toLowerCase()} doesn't count.`,
+    () => `Your explanation works as long as ${uncomfortableTruth.toLowerCase()} is ignored.`
+  ];
+  
+  const randomIndex = Math.floor(Math.random() * structures.length);
+  const sentence = structures[randomIndex]();
   
   return validateText(sentence);
 }

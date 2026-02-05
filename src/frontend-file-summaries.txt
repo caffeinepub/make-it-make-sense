@@ -1,18 +1,18 @@
 {
   "frontend/src/App.tsx": "Main app component that orchestrates authentication, profile setup, and routing between onboarding and main experience based on user state.",
-  "frontend/src/components/AuthGate.tsx": "Authentication gate component that displays sign-in interface for unauthenticated users with minimal clinical styling.",
+  "frontend/src/components/AuthGate.tsx": "Authentication gate component displaying sign-in interface with app title, role description, and updated single-line design principle: \"You restate what you're already telling yourself.\"",
   "frontend/src/components/ProfileSetup.tsx": "First-login profile setup screen that captures user name without phrasing as a question, required by authorization component.",
   "frontend/src/components/Header.tsx": "Minimal header with app title, reset control, and sign-out button using restrained neutral styling.",
-  "frontend/src/features/onboarding/onboardingQuestions.ts": "Defines the exact four onboarding questions as a constant array and the OnboardingStep type for tracking progress.",
+  "frontend/src/features/onboarding/onboardingQuestions.ts": "Defines the exact four onboarding questions with updated question #2 wording (\"What is getting most of your time or energy instead?\") and the OnboardingStep type.",
   "frontend/src/features/onboarding/OnboardingFlow.tsx": "One-question-at-a-time onboarding flow that captures verbatim responses and initializes user state after step 4.",
   "frontend/src/features/MainExperience.tsx": "Main experience router that shows onboarding if incomplete, weekly reflection if due, or daily surface otherwise.",
   "frontend/src/features/daily/DailySurface.tsx": "Daily experience view that renders empty space when silent or shows explanation block when content is due.",
   "frontend/src/features/daily/ExplanationBlock.tsx": "Centered explanation block displaying \"Your Current Explanation\" title with single sentence and \"State it without cushioning\" button.",
-  "frontend/src/features/weekly/WeeklyReflection.tsx": "Weekly consistency check view titled \"Where your logic bent\" with short inconsistency-focused reflection.",
+  "frontend/src/features/weekly/WeeklyReflection.tsx": "Weekly consistency check view with updated title \"Where the reasoning bent.\" displaying short inconsistency-focused reflection.",
   "frontend/src/features/settings/ResetControl.tsx": "Minimal reset control that clears onboarding data without asking questions, using simple confirmation pattern.",
   "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including profile, onboarding, reflection state, and sentence history management.",
-  "frontend/src/lib/textSynthesis.ts": "Deterministic sentence synthesis utilities that generate explanation sentences from user's onboarding answers with grammar/clarity edits only.",
-  "frontend/src/lib/textConstraints.ts": "Text validation utilities that enforce prohibited words list and post-onboarding question-mark prohibition.",
+  "frontend/src/lib/textSynthesis.ts": "Deterministic sentence synthesis utilities that generate explanation sentences using one of three allowed structures, randomly selected, composed strictly from user's onboarding answers.",
+  "frontend/src/lib/textConstraints.ts": "Text validation utilities that enforce prohibited words list (unchanged), detect reassurance language, and prevent question marks in generated text.",
   "frontend/src/index.css": "Global stylesheet with minimal clinical OKLCH color system using restrained neutral palette (off-white/gray/black) and light typography.",
   "frontend/tailwind.config.js": "Tailwind configuration with minimal clinical design tokens, restrained border radius, and system font stack."
 }

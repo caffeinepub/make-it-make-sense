@@ -1,3 +1,4 @@
+// No changes to the backend needed for this update. The hard constraints enforcement is handled by the AI prompt, not in the backend code.
 import Map "mo:core/Map";
 import List "mo:core/List";
 import Time "mo:core/Time";
@@ -219,3 +220,4 @@ actor {
     sentenceRetentionLimit;
   };
 };
+
